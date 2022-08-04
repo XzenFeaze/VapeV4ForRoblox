@@ -8469,6 +8469,39 @@ runcode(function()
 		["HoverText"] = "Allows you to access tiered items early."
 	})
 end)
+runcode(function()
+	local tiered = {}
+	local nexttier = {}
+	for i,v in pairs(bedwars["ShopItems"]) do
+		if v["tiered"] then
+			tiered[v.itemType] = v["tiered"]
+		end
+		if v["nextTier"] then
+			nexttier[v.itemType] = v["nextTier"]
+		end
+	end
+	local TierBypass = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
+		["Name"] = "INF Fly",
+		["Function"] = function(callback) 
+			if callback then
+				for i,v in pairs(bedwars["ShopItems"]) do
+					v["tiered"] = nil
+					v["nextTier"] = nil
+				end
+			else
+				for i,v in pairs(bedwars["ShopItems"]) do
+					if tiered[v.itemType] then
+						v["tiered"] = tiered[v.itemType]
+					end
+					if nexttier[v.itemType] then
+						v["nextTier"] = nexttier[v.itemType]
+					end
+				end
+			end
+		end,
+		["HoverText"] = "Allows you to access tiered items early."
+	})
+end)
 
 runcode(function()
 	local antivoidpart
